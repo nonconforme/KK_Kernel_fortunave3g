@@ -1054,11 +1054,10 @@ static int mdss_fb_blank_sub(int blank_mode, struct fb_info *info,
 
 	if (mfd->dcm_state == DCM_ENTER)
 		return -EPERM;
-
+	mutex_lock(&mfd->ctx_lock);
 	pr_debug("%pS mode:%d\n", __builtin_return_address(0),
 		blank_mode);
 
-	mutex_lock(&mfd->ctx_lock);
 	switch (blank_mode) {
 	case FB_BLANK_UNBLANK:
 		/* Start Display thread */
